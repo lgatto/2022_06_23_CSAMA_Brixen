@@ -64,6 +64,10 @@ class: middle, center, inverse
 
 ### www.rformassspectrometry.org
 
+---
+background-image: url("./figs/rforms.png")
+background-size: contain
+
 ???
 
 - **Home**: The aim of the RforMassSpectrometry initiative is to
@@ -149,7 +153,8 @@ MS is generally coupled to chromatography (liquid LC, but can also be
 gas-based GC). The time an analytes takes to elute from the
 chromatography column is the **retention time**.
 
-![A chromatogram, illustrating the total amount of analytes over the retention time.](./figs/chromatogram.png)
+
+&lt;img src="./figs/chromatogram.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ???
 
@@ -238,11 +243,37 @@ class: middle
 ## Spectra objects
 
 &lt;img src="https://rformassspectrometry.github.io/docs/img/raw.png" width="95%" style="display: block; margin: auto;" /&gt;
-
 ---
 class: middle
 
-Spectra code
+
+
+```r
+&gt; library(Spectra)
+&gt; (fls &lt;- dir(system.file("sciex", package = "msdata"), full.names = TRUE))
+[1] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_1_105-134.mzML"
+[2] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_3_105-134.mzML"
+&gt; Spectra(fls)
+MSn data (Spectra) with 1862 spectra in a MsBackendMzR backend:
+       msLevel     rtime scanIndex
+     &lt;integer&gt; &lt;numeric&gt; &lt;integer&gt;
+1            1     0.280         1
+2            1     0.559         2
+3            1     0.838         3
+4            1     1.117         4
+5            1     1.396         5
+...        ...       ...       ...
+1858         1   258.636       927
+1859         1   258.915       928
+1860         1   259.194       929
+1861         1   259.473       930
+1862         1   259.752       931
+ ... 33 more variables/columns.
+
+file(s):
+20171016_POOL_POS_1_105-134.mzML
+20171016_POOL_POS_3_105-134.mzML
+```
 
 ---
 class: middle, center, inverse
@@ -259,7 +290,8 @@ class: middle, center, inverse
 
 Matching **expected** and *observed* spectra:
 
-```
+
+```r
 &gt; PSMatch::calculateFragments("SIGFEGDSIGR")
            mz  ion type pos z        seq
 1    88.03931   b1    b   1 1          S
@@ -401,7 +433,15 @@ Basic peptide grouping scenarios.
 ---
 class: middle
 
-PSMatch code
+
+```r
+&gt; library(PSMatch)
+&gt; basename(idf &lt;- msdata::ident(full.names = TRUE))
+[1] "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzid"
+&gt; PSM(idf)
+PSM with 5802 rows and 35 columns.
+names(35): sequence spectrumID ... subReplacementResidue subLocation
+```
 
 ---
 class: middle, center, inverse
@@ -422,16 +462,52 @@ class: middle
 ---
 class: middle
 
-- Aggregation figure
-- QFeatures code
+### Aggregation
+
+&lt;img src="https://rformassspectrometry.github.io/QFeatures/articles/QFeatures_files/figure-html/featuresplot-1.png" width="65%" style="display: block; margin: auto;" /&gt;
 
 ---
 class: middle
 
-### Proteomics practicals:
+### Aggregation
 
-- **R for Mass Spectrometry** book
-- https://rformassspectrometry.github.io/docs/
+&lt;img src="https://rformassspectrometry.github.io/QFeatures/articles/QFeatures_files/figure-html/plotstat-1.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+class: middle
+
+## QFeatures objects
+
+
+```r
+&gt; library(QFeatures)
+&gt; data(hlpsms)
+&gt; hl &lt;- readQFeatures(hlpsms, ecol = 1:10, name = "psms")
+&gt; An instance of class QFeatures containing 1 assays:
+ [1] psms: SummarizedExperiment with 3010 rows and 10 columns
+&gt; hl &lt;- aggregateFeatures(hl, "psms", "Sequence", name = "peptides", fun = colMeans) |&gt;
+       aggregateFeatures("peptides", "ProteinGroupAccessions", name = "proteins", fun = colMeans)
+&gt; hl
+An instance of class QFeatures containing 3 assays:
+ [1] psms: SummarizedExperiment with 3010 rows and 10 columns
+ [2] peptides: SummarizedExperiment with 2923 rows and 10 columns
+ [3] proteins: SummarizedExperiment with 1596 rows and 10 columns
+```
+
+---
+class: middle, center, inverse
+
+# Proteomics practicals
+
+---
+class: middle
+
+## R for Mass Spectrometry book
+
+https://rformassspectrometry.github.io/docs/
+
+
+&lt;img src="./figs/toc.png" width="75%" style="display: block; margin: auto;" /&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
