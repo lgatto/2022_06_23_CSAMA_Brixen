@@ -1,0 +1,40 @@
+---
+title: "Mass spectrometry-based proteomics"
+subtitle: "Statistical Data Analysis for Genome-Scale Biology"
+author: "Laurent Gatto"
+date: "23 June 2022, Brixen"
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, custom.css]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+background-image: url("./figs/wooclap.png")
+background-size: contain
+
+
+```{r theme, echo=FALSE}
+xaringanthemer::style_mono_light(base_color = "#23395b")
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_webcam()     ## use w to turn on webcam
+xaringanExtra::use_tile_view()  ## use o to get an overview
+xaringanExtra::use_fit_screen() ## use Alt-F to fit to screen
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE
+  )
+xaringanExtra::use_panelset()
+```
+
+---
+class: middle
+
+## On the menu
+
+1. Participants survey
+2. The **R for Mass Spectrometry** initiative
+3. Mass spectrometry-based proteomics
