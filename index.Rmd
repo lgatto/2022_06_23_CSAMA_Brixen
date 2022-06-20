@@ -33,8 +33,17 @@ xaringanExtra::use_panelset()
 ---
 class: middle
 
+Slides available at
+[https://bit.ly/CSAMA2022](https://bit.ly/CSAMA2022) (CC-BY)
+
 ## On the menu
 
 1. Participants survey
 2. The **R for Mass Spectrometry** initiative
 3. Mass spectrometry-based proteomics
+
+
+---
+class: middle, center, inverse
+
+# R for Mass Spectrometry
