@@ -243,7 +243,7 @@ Data dependent acquisition (DDA):
 ???
 
 Highlight
-- Semi-stochastic nature of MS
+- Semi-stochastic nature of MS -> **missing data**
 - Data dependent acquisition (DDA)
 
 ---
@@ -511,6 +511,11 @@ class: middle, center, inverse
 - Quantitation data at the PSM or peptide level.
 - Data need to be aggregated into protein level data.
 
+???
+
+- Decision on quant method will depend on what your core facility is
+  expert in and the experimental design.
+
 ---
 class: middle
 
@@ -571,3 +576,11 @@ https://rformassspectrometry.github.io/docs/
 ```{r echo=FALSE, out.width='75%', fig.align = 'center'}
 knitr::include_graphics('./figs/toc.png')
 ```
+
+???
+
+- Chapters on raw data, identification, quantitative data.
+- Last chapter has links to specific workshops on proteomics and
+  metabolomics.
+- If you are interested in a package in particular (Spectra, PSMatch,
+  QFeatures, ...), have a look at the vignettes.
