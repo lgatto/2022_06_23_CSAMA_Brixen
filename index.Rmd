@@ -1,7 +1,7 @@
 ---
 title: "Mass spectrometry-based proteomics"
 subtitle: "Statistical Data Analysis for Genome-Scale Biology"
-author: "Laurent Gatto"
+author: "Laurent Gatto - @lgatt0"
 date: "23 June 2022, Brixen"
 output:
   xaringan::moon_reader:
@@ -33,8 +33,6 @@ xaringanExtra::use_panelset()
 ---
 class: middle
 
-Slides available at
-[https://bit.ly/CSAMA2022](https://bit.ly/CSAMA2022) (CC-BY)
 
 ## On the menu
 
@@ -42,13 +40,27 @@ Slides available at
 2. The **R for Mass Spectrometry** initiative
 3. Mass spectrometry-based proteomics
 
+### Slides available at [https://bit.ly/CSAMA2022](https://bit.ly/CSAMA2022) (CC-BY)
+
 
 ---
 class: middle, center, inverse
 
 # R for Mass Spectrometry
 
+
+.left-col-75[
+
 ## R software for the analysis and interpretation of high throughput mass spectrometry assays
+
+]
+
+.right-col-25[
+
+```{r echo=FALSE, out.width='80%', fig.align = 'center'}
+knitr::include_graphics('https://github.com/rformassspectrometry/stickers/raw/master/sticker/RforMassSpectrometry.png')
+```
+]
 
 ### www.rformassspectrometry.org
 
@@ -115,10 +127,10 @@ These data tables are less similar than they appear.
 ---
 class: middle
 
-### Overview
+### MS workflow
 
-```{r echo=FALSE, out.width='85%', fig.align = 'center'}
-knitr::include_graphics('./figs/overview1.jpg')
+```{r echo=FALSE, out.width='100%', fig.align = 'center'}
+knitr::include_graphics('./figs/workflow.png')
 ```
 
 ---
@@ -159,22 +171,32 @@ knitr::include_graphics('./figs/chromatogram.png')
 ---
 class: middle
 
-An mass spectrometer is composed of three components:
 
-1. The *source*, that ionises the molecules: examples are Matrix-assisted
+An mass spectrometer is composed of three parts
+
+.left-col-30[
+
+1. The **source**, that ionises the molecules: examples are Matrix-assisted
    laser desorption/ionisation (MALDI) or electrospray ionisation
    (ESI).
-2. The *analyser*, that separates the ions: Time of flight (TOF) or Orbitrap.
-3. The *detector* that quantifies the ions.
+2. The **analyser**, that separates the ions: Time of flight (TOF) or Orbitrap.
+3. The **detector** that quantifies the ions.
 
-Ions typically go through that cylce at least twice (MS2, tandem MS,
-or MSMS). Before the second cycle, individual *precursor* ions a
-selected and broken into *fragment* ions.
+]
 
----
-class: middle center
+.right-col-70[
 
-![Schematics of a mass spectrometer and two rounds of MS.](./figs/SchematicMS2.png)
+```{r echo=FALSE, out.width='85%', fig.align = 'center'}
+knitr::include_graphics('./figs/SchematicMS2.png')
+```
+]
+
+
+In **data dependent acquisition** (DDA), *individual* ions go through
+that cylce at least twice (MS2, tandem MS, or MSMS). Before the second
+cycle, individual *precursor* ions a selected and broken into
+*fragment* ions.
+
 
 ???
 
@@ -200,9 +222,23 @@ class: middle center
 ![Separation and detection of ions in a mass spectrometer.](./figs/mstut.gif)
 
 ---
-class: middle center
+class: middle
 
-![Parent ions in the MS1 spectrum (left) and two sected fragment ions MS2 spectra (right).](./figs/MS1-MS2-spectra.png)
+
+.left-col-75[
+```{r echo=FALSE, out.width='90%', fig.align = 'center'}
+knitr::include_graphics('./figs/MS1-MS2-spectra.png')
+```
+]
+
+.right-col-25[
+
+Data dependent acquisition (DDA):
+
+- parent ions in the MS1 spectrum (left)
+- selected fragment ions MS2 spectra (right).
+
+]
 
 ???
 
@@ -243,11 +279,14 @@ knitr::include_graphics('https://rformassspectrometry.github.io/docs/img/raw.png
 class: middle
 
 
+.left-col-75[
+
 ```{r, eval = FALSE}
 > library(Spectra)
-> (fls <- dir(system.file("sciex", package = "msdata"), full.names = TRUE))
-[1] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_1_105-134.mzML"
-[2] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_3_105-134.mzML"
+> basename(fls <- dir(system.file("sciex", package = "msdata"),
+                      full.names = TRUE))
+[1] "20171016_POOL_POS_1_105-134.mzML"
+[2] "20171016_POOL_POS_3_105-134.mzML"
 > Spectra(fls)
 MSn data (Spectra) with 1862 spectra in a MsBackendMzR backend:
        msLevel     rtime scanIndex
@@ -269,6 +308,14 @@ file(s):
 20171016_POOL_POS_1_105-134.mzML
 20171016_POOL_POS_3_105-134.mzML
 ```
+]
+
+.right-col-25[
+
+```{r echo=FALSE, out.width='90%', fig.align = 'center'}
+knitr::include_graphics('https://github.com/rformassspectrometry/Spectra/raw/master/logo.png')
+```
+]
 
 ---
 class: middle, center, inverse
@@ -396,39 +443,42 @@ Rates: Two Sides of the Same Coin](https://pubs.acs.org/doi/abs/10.1021/pr700739
 ---
 ###  Identification: Protein inference
 
+.left-col-25[
 - Keep only reliable peptides
-- From these peptides, infer proteins
+- From these peptides, infer proteins.
 - If proteins can't be resolved due to shared peptides, merge them
   into **protein groups** of indistinguishable or non-differentiable
   proteins.
 
+]
 
----
-class: middle
+.right-col-75[
+```{r echo=FALSE, out.width='100%', fig.align = 'center'}
+knitr::include_graphics('./figs/nbt0710-647-F2.gif')
 
-![Peptide evidence classes](./figs/nbt0710-647-F2.gif)
-
+```
 From [Qeli and Ahrens
 (2010)](http://www.ncbi.nlm.nih.gov/pubmed/20622826).
 
+]
 
----
-class: middle
+<!-- --- -->
+<!-- class: middle -->
 
-![Peptide evidence classes](./figs/F5_large.jpg)
-From [Nesvizhskii and Aebersold
-(2005)](http://www.ncbi.nlm.nih.gov/pubmed/16009968).
+<!-- ![Peptide evidence classes](./figs/F5_large.jpg) -->
+<!-- From [Nesvizhskii and Aebersold -->
+<!-- (2005)](http://www.ncbi.nlm.nih.gov/pubmed/16009968). -->
 
-???
+<!-- ??? -->
 
-Basic peptide grouping scenarios.
-- a. distinct protein identifications.
-- b. differentiable protein identifications.
-- c. indistinguishable protein identifications.
-- d. subset protein identification.
-- e. subsumable protein identification.
-- f. an example of a protein group where one protein can explain all
-  observed peptides, but its identification is not conclusive.
+<!-- Basic peptide grouping scenarios. -->
+<!-- - a. distinct protein identifications. -->
+<!-- - b. differentiable protein identifications. -->
+<!-- - c. indistinguishable protein identifications. -->
+<!-- - d. subset protein identification. -->
+<!-- - e. subsumable protein identification. -->
+<!-- - f. an example of a protein group where one protein can explain all -->
+<!--   observed peptides, but its identification is not conclusive. -->
 
 ---
 class: middle
@@ -448,7 +498,6 @@ class: middle, center, inverse
 # Quantitation
 
 ---
-class: middle
 
 ### Quantitation
 
@@ -457,6 +506,10 @@ class: middle
 |:---|:----------|:----------|
 |MS1 |XIC        |SILAC, 15N |
 |MS2 |Counting   |iTRAQ, TMT |
+
+
+- Quantitation data at the PSM or peptide level.
+- Data need to be aggregated into protein level data.
 
 ---
 class: middle
@@ -495,6 +548,12 @@ An instance of class QFeatures containing 3 assays:
  [2] peptides: SummarizedExperiment with 2923 rows and 10 columns
  [3] proteins: SummarizedExperiment with 1596 rows and 10 columns
 ```
+
+```{r echo=FALSE, out.width='15%', fig.align = 'right'}
+knitr::include_graphics('https://raw.githubusercontent.com/rformassspectrometry/stickers/master/QFeatures/QFeatures.png')
+```
+
+
 
 ---
 class: middle, center, inverse

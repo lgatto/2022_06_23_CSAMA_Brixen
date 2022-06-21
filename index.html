@@ -3,7 +3,7 @@
   <head>
     <title>Mass spectrometry-based proteomics</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Laurent Gatto" />
+    <meta name="author" content="Laurent Gatto - @lgatt0" />
     <script src="index_files/xaringanExtra-webcam-0.0.1/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <link href="index_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ## Statistical Data Analysis for Genome-Scale Biology
 ]
 .author[
-### Laurent Gatto
+### Laurent Gatto - <span class="citation">@lgatt0</span>
 ]
 .date[
 ### 23 June 2022, Brixen
@@ -45,8 +45,6 @@ background-size: contain
 ---
 class: middle
 
-Slides available at
-[https://bit.ly/CSAMA2022](https://bit.ly/CSAMA2022) (CC-BY)
 
 ## On the menu
 
@@ -54,13 +52,25 @@ Slides available at
 2. The **R for Mass Spectrometry** initiative
 3. Mass spectrometry-based proteomics
 
+### Slides available at [https://bit.ly/CSAMA2022](https://bit.ly/CSAMA2022) (CC-BY)
+
 
 ---
 class: middle, center, inverse
 
 # R for Mass Spectrometry
 
+
+.left-col-75[
+
 ## R software for the analysis and interpretation of high throughput mass spectrometry assays
+
+]
+
+.right-col-25[
+
+&lt;img src="https://github.com/rformassspectrometry/stickers/raw/master/sticker/RforMassSpectrometry.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
 
 ### www.rformassspectrometry.org
 
@@ -125,9 +135,9 @@ These data tables are less similar than they appear.
 ---
 class: middle
 
-### Overview
+### MS workflow
 
-&lt;img src="./figs/overview1.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="./figs/workflow.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 ### How does MS work?
@@ -165,22 +175,30 @@ chromatography column is the **retention time**.
 ---
 class: middle
 
-An mass spectrometer is composed of three components:
 
-1. The *source*, that ionises the molecules: examples are Matrix-assisted
+An mass spectrometer is composed of three parts
+
+.left-col-30[
+
+1. The **source**, that ionises the molecules: examples are Matrix-assisted
    laser desorption/ionisation (MALDI) or electrospray ionisation
    (ESI).
-2. The *analyser*, that separates the ions: Time of flight (TOF) or Orbitrap.
-3. The *detector* that quantifies the ions.
+2. The **analyser**, that separates the ions: Time of flight (TOF) or Orbitrap.
+3. The **detector** that quantifies the ions.
 
-Ions typically go through that cylce at least twice (MS2, tandem MS,
-or MSMS). Before the second cycle, individual *precursor* ions a
-selected and broken into *fragment* ions.
+]
 
----
-class: middle center
+.right-col-70[
 
-![Schematics of a mass spectrometer and two rounds of MS.](./figs/SchematicMS2.png)
+&lt;img src="./figs/SchematicMS2.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+
+In **data dependent acquisition** (DDA), *individual* ions go through
+that cylce at least twice (MS2, tandem MS, or MSMS). Before the second
+cycle, individual *precursor* ions a selected and broken into
+*fragment* ions.
+
 
 ???
 
@@ -206,9 +224,21 @@ class: middle center
 ![Separation and detection of ions in a mass spectrometer.](./figs/mstut.gif)
 
 ---
-class: middle center
+class: middle
 
-![Parent ions in the MS1 spectrum (left) and two sected fragment ions MS2 spectra (right).](./figs/MS1-MS2-spectra.png)
+
+.left-col-75[
+&lt;img src="./figs/MS1-MS2-spectra.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-col-25[
+
+Data dependent acquisition (DDA):
+
+- parent ions in the MS1 spectrum (left)
+- selected fragment ions MS2 spectra (right).
+
+]
 
 ???
 
@@ -247,12 +277,15 @@ class: middle
 class: middle
 
 
+.left-col-75[
+
 
 ```r
 &gt; library(Spectra)
-&gt; (fls &lt;- dir(system.file("sciex", package = "msdata"), full.names = TRUE))
-[1] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_1_105-134.mzML"
-[2] "/home/lgatto/R/x86_64-pc-linux-gnu-library/4.2/msdata/sciex/20171016_POOL_POS_3_105-134.mzML"
+&gt; basename(fls &lt;- dir(system.file("sciex", package = "msdata"),
+                      full.names = TRUE))
+[1] "20171016_POOL_POS_1_105-134.mzML"
+[2] "20171016_POOL_POS_3_105-134.mzML"
 &gt; Spectra(fls)
 MSn data (Spectra) with 1862 spectra in a MsBackendMzR backend:
        msLevel     rtime scanIndex
@@ -274,6 +307,12 @@ file(s):
 20171016_POOL_POS_1_105-134.mzML
 20171016_POOL_POS_3_105-134.mzML
 ```
+]
+
+.right-col-25[
+
+&lt;img src="https://github.com/rformassspectrometry/Spectra/raw/master/logo.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 class: middle, center, inverse
@@ -396,39 +435,39 @@ Rates: Two Sides of the Same Coin](https://pubs.acs.org/doi/abs/10.1021/pr700739
 ---
 ###  Identification: Protein inference
 
+.left-col-25[
 - Keep only reliable peptides
-- From these peptides, infer proteins
+- From these peptides, infer proteins.
 - If proteins can't be resolved due to shared peptides, merge them
   into **protein groups** of indistinguishable or non-differentiable
   proteins.
 
+]
 
----
-class: middle
-
-![Peptide evidence classes](./figs/nbt0710-647-F2.gif)
-
+.right-col-75[
+&lt;img src="./figs/nbt0710-647-F2.gif" width="100%" style="display: block; margin: auto;" /&gt;
 From [Qeli and Ahrens
 (2010)](http://www.ncbi.nlm.nih.gov/pubmed/20622826).
 
+]
 
----
-class: middle
+&lt;!-- --- --&gt;
+&lt;!-- class: middle --&gt;
 
-![Peptide evidence classes](./figs/F5_large.jpg)
-From [Nesvizhskii and Aebersold
-(2005)](http://www.ncbi.nlm.nih.gov/pubmed/16009968).
+&lt;!-- ![Peptide evidence classes](./figs/F5_large.jpg) --&gt;
+&lt;!-- From [Nesvizhskii and Aebersold --&gt;
+&lt;!-- (2005)](http://www.ncbi.nlm.nih.gov/pubmed/16009968). --&gt;
 
-???
+&lt;!-- ??? --&gt;
 
-Basic peptide grouping scenarios.
-- a. distinct protein identifications.
-- b. differentiable protein identifications.
-- c. indistinguishable protein identifications.
-- d. subset protein identification.
-- e. subsumable protein identification.
-- f. an example of a protein group where one protein can explain all
-  observed peptides, but its identification is not conclusive.
+&lt;!-- Basic peptide grouping scenarios. --&gt;
+&lt;!-- - a. distinct protein identifications. --&gt;
+&lt;!-- - b. differentiable protein identifications. --&gt;
+&lt;!-- - c. indistinguishable protein identifications. --&gt;
+&lt;!-- - d. subset protein identification. --&gt;
+&lt;!-- - e. subsumable protein identification. --&gt;
+&lt;!-- - f. an example of a protein group where one protein can explain all --&gt;
+&lt;!--   observed peptides, but its identification is not conclusive. --&gt;
 
 ---
 class: middle
@@ -449,7 +488,6 @@ class: middle, center, inverse
 # Quantitation
 
 ---
-class: middle
 
 ### Quantitation
 
@@ -458,6 +496,10 @@ class: middle
 |:---|:----------|:----------|
 |MS1 |XIC        |SILAC, 15N |
 |MS2 |Counting   |iTRAQ, TMT |
+
+
+- Quantitation data at the PSM or peptide level.
+- Data need to be aggregated into protein level data.
 
 ---
 class: middle
@@ -493,6 +535,10 @@ An instance of class QFeatures containing 3 assays:
  [2] peptides: SummarizedExperiment with 2923 rows and 10 columns
  [3] proteins: SummarizedExperiment with 1596 rows and 10 columns
 ```
+
+&lt;img src="https://raw.githubusercontent.com/rformassspectrometry/stickers/master/QFeatures/QFeatures.png" width="15%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+
 
 ---
 class: middle, center, inverse
