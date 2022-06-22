@@ -12,8 +12,7 @@ output:
       ratio: 16:9
       countIncrementalSlides: true
 ---
-background-image: url("./figs/wooclap.png")
-background-size: contain
+class: middle
 
 
 ```{r theme, echo=FALSE}
@@ -29,11 +28,6 @@ xaringanExtra::use_extra_styles(
   )
 xaringanExtra::use_panelset()
 ```
-
----
-class: middle
-
-
 ## On the menu
 
 1. Participants survey
