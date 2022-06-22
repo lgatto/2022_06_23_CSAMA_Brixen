@@ -558,7 +558,14 @@ An instance of class QFeatures containing 3 assays:
 knitr::include_graphics('https://raw.githubusercontent.com/rformassspectrometry/stickers/master/QFeatures/QFeatures.png')
 ```
 
+---
+class: middle
 
+### MS workflow (with packages)
+
+```{r echo=FALSE, out.width='100%', fig.align = 'center'}
+knitr::include_graphics('./figs/workflow2.png')
+```
 
 ---
 class: middle, center, inverse
